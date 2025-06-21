@@ -30,7 +30,7 @@ const handleFormRegister = async (
                 if (res.data.isValid) {
                     await queryClient.refetchQueries({ queryKey: ["account"] })
                     alert(res.data.message)
-                    navagate("/login")
+                    navagate("/choose-images")
                     return;
                 }
                 alert(res.data.message)

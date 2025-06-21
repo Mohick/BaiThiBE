@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { handleChooseImages } from "./handle choose images/handle choose images";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
+import type { PropsAccount } from "../../Axios Intandce/Props Request/Account";
 
 
 
@@ -17,7 +18,7 @@ export const avatars = [
 
 
 const ChooseImages = () => {
-
+    const outletContext = useOutletContext() as PropsAccount
     const [selectedAvatar, setSelectedAvatar] = useState<{
         index: number;
         image: string,
@@ -25,7 +26,11 @@ const ChooseImages = () => {
     } | null>(null);
     const [isDisabled, setIsDisabled] = useState(true);
     const navigate = useNavigate();
-
+    useEffect(() => {
+        if (outletContext && outletContext.avatar) {
+            navigate("/home")
+        }
+    }, [outletContext])
     return (
         <div className="max-w-md mx-auto bg-white rounded-xl shadow-md p-6 space-y-6 transition-all duration-300">
             <h2 className="text-xl font-bold text-center">Chọn ảnh đại diện</h2>
@@ -81,7 +86,7 @@ const ChooseImages = () => {
             <div className="flex flex-col gap-2">
                 <button onClick={() => {
                     if (selectedAvatar) {
-                        handleChooseImages({ payload: selectedAvatar.payload, linkImage: selectedAvatar.image,className: "avatar-custom" },navigate)
+                        handleChooseImages({ payload: selectedAvatar.payload, linkImage: selectedAvatar.image, className: "avatar-custom" }, navigate)
                     }
                 }} className={`${isDisabled ? "bg-gray-200 text-gray-600 opacity-50" : "bg-black cursor-pointer  text-white"} transition-all duration-300`} disabled={isDisabled}>
                     Tiếp tục

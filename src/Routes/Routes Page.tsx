@@ -19,6 +19,8 @@ const RoutesPage = () => {
 
     return <Routes>
         <Route path="/" element={<CheckLogin />} >
+            <Route path="login" element={<LoginPage />} />
+            <Route path="register" element={<RegisterPage />} />
             <Route path="choose-images" element={<ChooseImages />} />
             <Route path="home" element={<HomePage />} />
             <Route path="profile" element={<UserProfile />} />
@@ -27,8 +29,6 @@ const RoutesPage = () => {
                 <Route path="views/:id" element={<ViewsUser />} />
                 <Route path="update/:id" element={<UpdateUser />} />
             </Route>
-            <Route path="login" element={<LoginPage />} />
-            <Route path="register" element={<RegisterPage />} />
         </Route>
         <Route path="forgot-password" element={<ForgotPassword />} />
         <Route path="reset-password/:id" element={<ResetPassword />} />

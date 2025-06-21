@@ -28,8 +28,6 @@ const Admin = () => {
         avatar: "",
         verify: false
     });
-    console.log(account);
-    
     if(!account.isAdmin) {
         return <div className="w-screen h-screen flex justify-center items-center">
             <div className="text-xl flex items-center gap-2 font-semibold">

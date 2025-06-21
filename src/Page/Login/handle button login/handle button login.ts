@@ -26,7 +26,7 @@ const handleFormLogin = async (
             if (res.data.isValid) {
                 await queryClient.refetchQueries({ queryKey: ["account"] })
                 alert(res.data.message)
-                navagate("/home")
+                navagate("/choose-images")
                 return;
             }
             alert(res.data.message)

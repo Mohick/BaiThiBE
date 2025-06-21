@@ -55,6 +55,8 @@ const handleChooseImages = async ({ payload, linkImage, className }: {
                     if (res) {
                         const hasUpload = await uploadImage({ avatar: `${res}` }) as CRUDRequestSuccessProps
                           const {data : {isValid}}   =  hasUpload
+                          console.log(hasUpload);
+                          
                         if (isValid) {
                             navigate('/home')
                         }

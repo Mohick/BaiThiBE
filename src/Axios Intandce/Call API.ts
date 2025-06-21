@@ -54,6 +54,10 @@ const createAccountFromAdmin = (body: PropsRegister) => {
 const deleteAccountFromAdmin = (id: string) => {
     return requestDelete(`/admin/delete-account${id}`)
 }
+
+const getMessage = async () => {
+    return await requestGet('/chat/get-sessage')
+}
 export {
     autoLogin,
     register,
@@ -66,5 +70,6 @@ export {
     getAllAccount,
     upDateAccountFromAdmin,
     createAccountFromAdmin,
-    deleteAccountFromAdmin
+    deleteAccountFromAdmin,
+    getMessage
 }
