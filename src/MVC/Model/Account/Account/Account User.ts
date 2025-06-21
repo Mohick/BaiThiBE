@@ -53,7 +53,7 @@ const AccountUser = {
     },
     readToken: async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const token = req.headers.authorization?.split(" ")[1];
+            const token = req.cookies.token;
             if (token) {
                 const tokenDecode = jwt.verify(token, process.env.SECRET_KEY as string) as { exp: number, id: string };
 
@@ -89,13 +89,12 @@ const AccountUser = {
     },
     uploadAvartar: async (getNext: { valid: boolean, id: string }, req: Request, res: Response, next: NextFunction) => {
         try {
-            console.log(req.body);
+
             const { avatar } = req.body;
 
             if (getNext.valid && avatar) {
                 const account = await modelsAccount.findOne({ _id: getNext.id }) as {} | undefined | any;
                 if (account) {
-
                     account.avatar = avatar;
                     await account.save();
                     res.status(200).json({ isValid: true, message: "Thay đổi avatar thành công." });

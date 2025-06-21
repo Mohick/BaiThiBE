@@ -17,24 +17,30 @@ const chatApps = {
     sendChat: async (getNext: { valid: boolean, id: string, reFreshToken: boolean, account: any }, req: Request, res: Response, next: NextFunction) => {
         try {
             const { message } = req.body as { message: string };
-            chatApps.messages.push({
-                message: message as string,
-                id: getNext.id as string,
-                time: new Date().toLocaleString()
-            });
-            if (chatApps.messages.length > 50) {
-                chatApps.messages.shift()
-            };
-            io.emit("chat", chatApps.messages);
-            res.status(200).json({ message: "ok" });
+            if (message && getNext) {
+                
+                chatApps.messages.push({
+                    message: message as string,
+                    id: getNext.id as string,
+                    time: new Date().toLocaleString()
+                });
+                console.log(chatApps);
+                if (chatApps.messages.length > 50) {
+                    chatApps.messages.shift()
+                };
+                io.emit("chat", chatApps.messages);
+                res.status(200).json({ message: "ok" });
+            } else {
+                res.status(400).json({ message: "méo có tin nhắn gửi cái căn cọt " })
+            }
         } catch (error) {
             console.log(error);
             res.status(400).json({ message: "Lỗi server nội bộ" })
         }
     },
     getChat: async (getNext: { valid: boolean, id: string, reFreshToken: boolean, account: any }, req: Request, res: Response, next: NextFunction) => {
-        if(getNext) {
-            
+        if (getNext) {
+            res.status(200).json({ messages: chatApps.messages });
         }
     }
 }

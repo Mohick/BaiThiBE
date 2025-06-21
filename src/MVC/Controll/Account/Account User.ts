@@ -3,7 +3,7 @@ import RuleAccount from "../../Model/Account/Account/Rule";
 import AccountUser from "../../Model/Account/Account/Account User";
 import register from "../../Model/Account/Account/Register";
 import Login from "../../Model/Account/Account/Login";
-import AccountAdmin from "../../Model/Account/Account/Account Admin";
+
 const RoutesAccount = express.Router();
 
 RoutesAccount.post("/register", RuleAccount.ruleRegister, register.wasCreate, register.register, AccountUser.sendToken)
