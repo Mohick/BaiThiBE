@@ -17,6 +17,7 @@ export interface CRUDRequestSuccessProps {
         isValid: boolean,
         message: string,
         account?: PropsAccount
+        hasImage?: boolean
     },
     status: number;
     statusText: string;

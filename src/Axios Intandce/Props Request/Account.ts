@@ -9,5 +9,8 @@ export interface PropsAccount {
     avatar?: string
     verify?: boolean
     valid?: boolean
-    isAdmin?: boolean
+    isAdmin?: boolean,
+    createdAt?: string,
+    updatedAt?: string,
+    __v?: number
 }

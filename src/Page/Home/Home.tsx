@@ -46,6 +46,7 @@ const HomePage = () => {
         })
 
     }, [outletContext])
+    
     const sendMessage = () => {
         sendChat({ message })
     };

@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+
 import { useNavigate,  useParams } from "react-router-dom";
 import { handleresetPassword } from "./handle forgot password/handle reset password";
+import { useState } from "react";
 
 const ResetPassword = () => {
   const [password, setPassword] = useState("");

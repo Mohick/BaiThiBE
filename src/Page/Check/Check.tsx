@@ -30,7 +30,8 @@ const CheckLogin = () => {
             }
         }
     }, [isLoading])
-
+    console.log(isLoading);
+    
     return <Outlet context={data} />
 }
 

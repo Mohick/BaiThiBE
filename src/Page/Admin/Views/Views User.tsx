@@ -1,10 +1,11 @@
 
 import { useNavigate, useOutletContext } from "react-router-dom";
-import type { AccountProps } from "../../../Hooks/Account/Props Account";
+import type { PropsAccount } from "../../../Axios Intandce/Props Request/Account";
+
 
 const UserDetail = () => {
     const navigate = useNavigate();
-    const user = useOutletContext<AccountProps>();
+    const user = useOutletContext<PropsAccount>();
     return (
         <div className="max-w-2xl mx-auto fixed left-0 right-0 bottom-0 top-0 bg-white h-fit mt-10 p-6 rounded-lg z-40 shadow-lg border">
             <h2 className="text-2xl font-semibold mb-4">User Detail</h2>

@@ -1,20 +1,20 @@
 
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import type { AccountProps } from "../../../Hooks/Account/Props Account";
-import { handleUpdate, type FormValues } from "./handle update";
+import { handleUpdate } from "./handle update";
+import type { PropsAccount } from "../../../Axios Intandce/Props Request/Account";
 
 
 
 const UpdateUser = () => {
     const navigate = useNavigate();
-    const user = useOutletContext<AccountProps>();
+    const user = useOutletContext<PropsAccount>();
 
     const {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<FormValues>({
+    } = useForm<PropsAccount>({
         defaultValues: {
             username: user.username,
             email: user.email,
@@ -24,7 +24,7 @@ const UpdateUser = () => {
         },
     });
 
-    const onSubmit = (data: FormValues) => {
+    const onSubmit = (data: PropsAccount) => {
        handleUpdate(data,user,navigate)
     };
 
