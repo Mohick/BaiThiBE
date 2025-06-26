@@ -30,7 +30,7 @@ io.on("connection", (socket) => {
         console.log("user disconnected");
     });
     socket.on("chat", (data) => {
-        console.log(data);
+      
     })
 });
 export { io };

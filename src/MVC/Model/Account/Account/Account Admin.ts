@@ -7,7 +7,7 @@ const AccountAdmin = {
     requestGetUserFromAdmin: async (gextNext: { valid: boolean, id: string, isAdmin: boolean }, req: Request, res: Response, next: NextFunction) => {
         try {
             console.log(gextNext.isAdmin);
-            
+
             if (gextNext.valid && gextNext.isAdmin) {
                 const skipItems = (1 /*page*/ - 1 /*index*/) * 10 /*limit*/;
                 const modelAccounts = await modelsAccount.find({}).skip(skipItems).limit(10).exec() as {} | undefined | any;
@@ -27,10 +27,7 @@ const AccountAdmin = {
                 if (password) {
                     body.password = await hashStr(password);
                 }
-                console.log(body);
-
-                const account = await modelsAccount.findOneAndUpdate({ _id }, body, { new: true }) as {} | undefined | any;
-                console.log(account);
+                await modelsAccount.findOneAndUpdate({ _id }, body, { new: true }) as {} | undefined | any;
 
                 res.json({ isValid: true, message: 'Thay đổi tài khoản thành công.' });
             } else {

@@ -15,7 +15,6 @@ const Login = {
                 const account = await modelsAccount.findOne({ username }) as {} | undefined | any;
 
                 if (account) {
-
                     const checkPass = await compareStr(password, account.password);
                     if (!checkPass) {
                         res.status(400).json({ isValid: false, message: "Tài khoản khôn tìm thấy" })
@@ -25,7 +24,8 @@ const Login = {
                         next({
                             valid: true,
                             id: account._id,
-                            reFreshToken: false
+                            reFreshToken: false,
+                            hasImage: !!account.avatar
                         })
                     }
                 } else {
@@ -52,12 +52,10 @@ const Login = {
                     if (isAdmin) {
                         obAccount.isAdmin = true;
                     }
-                    console.log(obAccount);
-
                     const refreshToken = getNext.resfreshToken;
 
                     if (refreshToken) {
-                        next({ valid: true, data: obAccount, resfreshToken: getNext.resfreshToken });
+                        next({ valid: true, account: obAccount, resfreshToken: getNext.resfreshToken });
                     } else {
 
                         res.status(200).json({ isValid: true, account: obAccount });

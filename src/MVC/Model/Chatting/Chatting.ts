@@ -24,7 +24,6 @@ const chatApps = {
                     id: getNext.id as string,
                     time: new Date().toLocaleString()
                 });
-                console.log(chatApps);
                 if (chatApps.messages.length > 50) {
                     chatApps.messages.shift()
                 };

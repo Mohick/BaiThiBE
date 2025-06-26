@@ -13,11 +13,7 @@ const AccountUser = {
             const claim = getNext.valid;
             if (claim) {
                 const admin = await modelsAdmin.findOne({ adminID: getNext.id });
-                console.log(admin);
-                
                 let checkAdmin = admin ? true : false
-                console.log(checkAdmin);
-                
                 next({ valid: true, isAdmin: checkAdmin, id: getNext.id });
             } else {
                 res.status(400).json({ isValid: false, message: "Xác thực không thành công." });
@@ -27,21 +23,25 @@ const AccountUser = {
             res.status(500).json({ isValid: false, message: "Lỗi server nội bộ." });
         }
     },
-    sendToken: async (getNext: { valid: boolean, id: string, reFreshToken: boolean, account: any }, req: Request, res: Response, next: NextFunction) => {
+    sendToken: async (getNext: { valid: boolean, id: string, reFreshToken: boolean, account: any, hasImage?: boolean }, req: Request, res: Response, next: NextFunction) => {
         try {
             if (getNext.valid) {
                 const token = jwt.sign({ id: getNext.id }, process.env.SECRET_KEY as string, { expiresIn: "7d" });
 
                 if (getNext.reFreshToken) {
-                    res.status(200).cookie("token", token, { httpOnly: false, maxAge: 7 * 24 * 60 * 60 * 1000, sameSite: "lax", secure: false }).json({
+                    res.status(200).cookie("token", token, { httpOnly: process.env.STATUS != 'DEV', maxAge: 7 * 24 * 60 * 60 * 1000, sameSite: process.env.STATUS != 'DEV' ? 'none' : 'lax', secure: process.env.STATUS != 'DEV' }).json({
                         isValid: true, message: "Đăng nhập thành công.",
-                        account: getNext.account
                     })
                     return;
                 } else {
-                    res.status(200).cookie("token", token, { httpOnly: false, maxAge: 7 * 24 * 60 * 60 * 1000, sameSite: "lax", secure: false }).json({
-                        isValid: true, message: "Đăng nhập thành công. 1"
-                    });
+                    if (getNext.hasImage) {
+                        res.status(200).cookie("token", token, { httpOnly: process.env.STATUS != 'DEV', maxAge: 7 * 24 * 60 * 60 * 1000, sameSite: process.env.STATUS != 'DEV' ? 'none' : 'lax', secure: process.env.STATUS != 'DEV' }).
+                            json({ isValid: true, id: getNext.id, hasImage: true, message: "Đăng nhập thành công." });
+                    } else {
+                        res.status(200).cookie("token", token, { httpOnly: process.env.STATUS != 'DEV', maxAge: 7 * 24 * 60 * 60 * 1000, sameSite: process.env.STATUS != 'DEV' ? 'none' : 'lax', secure: process.env.STATUS != 'DEV' }).json({
+                            isValid: true, message: "Đăng nhập thành công.",
+                        })
+                    }
                 }
             } else {
                 res.status(400).json({ isValid: false, message: "Xác thực không thành công." });
@@ -98,9 +98,9 @@ const AccountUser = {
                     account.avatar = avatar;
                     await account.save();
                     res.status(200).json({ isValid: true, message: "Thay đổi avatar thành công." });
-                }else {
+                } else {
                     res.status(400).json({
-                        isValid: true, message: "Thay đổi avatar thành công." 
+                        isValid: true, message: "Thay đổi avatar thành công."
                     })
                 }
             } else {
