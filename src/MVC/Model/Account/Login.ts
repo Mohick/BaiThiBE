@@ -1,5 +1,5 @@
 import type { NextFunction, Request, Response } from "express"
-import modelsAccount from "../../../../Schema/Account/Account";
+import modelsAccount from "../../../Schema/Account/Account";
 import { compareStr } from "./Secure";
 
 

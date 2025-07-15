@@ -1,5 +1,5 @@
 import express from "express";
-import Account from "../../Model/Account/Account/Account_User";
+import Account from "../../Model/Account/Account_User";
 import chatApps from "../../Model/Chatting/Chatting";
 const chatApp = express.Router();
 
