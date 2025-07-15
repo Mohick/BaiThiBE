@@ -1,4 +1,4 @@
-import modelsAccount from "../../../../Schema/Account/Account";
+import modelsAccount from "../../../Schema/Account/Account";
 import { hashStr } from "./Secure";
 import type { NextFunction, Request, Response } from "express";
 

@@ -1,6 +1,6 @@
 import express from "express";
-import AccountUser from "../../Model/Account/Account/Account User";
-import AccountAdmin from "../../Model/Account/Account/Account Admin";
+import AccountUser from "../../Model/Account/Account_User";
+import AccountAdmin from "../../Model/Account/Account_Admin";
 const RoutesAdmin = express.Router();
 
 RoutesAdmin.get("/all-accounts", AccountUser.readToken, AccountUser.roleAccount, AccountAdmin.requestGetUserFromAdmin)

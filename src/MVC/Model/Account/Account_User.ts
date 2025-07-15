@@ -1,10 +1,10 @@
 import type { NextFunction, Request, Response } from "express";
 import jwt from 'jsonwebtoken';
-import modelsAdmin from "../../../../Schema/Admin/Admin";
-import modelsAccount from "../../../../Schema/Account/Account";
-import modelsRequirePassword from "../../../../Schema/Reset Password/Reset Password";
+import modelsAdmin from "../../../Schema/Admin/Admin";
+import modelsAccount from "../../../Schema/Account/Account";
+import modelsRequirePassword from "../../../Schema/Reset_Password/Reset_Password";
 import { hashStr } from "./Secure";
-import { sendEmail } from "../../../../Send Email/Send Email";
+import { sendEmail } from "../../../Send_Email/Send_Email";
 
 const AccountUser = {
 
@@ -147,6 +147,40 @@ const AccountUser = {
                     } else {
                         res.status(400).json({ isValid: false, message: "Tài khoản không tồn tại." });
                     }
+                } else {
+                    res.status(400).json({ isValid: false, message: "Tài khoản không tồn tại." });
+                }
+            } else {
+                res.status(400).json({ isValid: false, message: "Tài khoản không tồn tại." });
+            }
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ isValid: false, message: "Lỗi server nội bộ." });
+        }
+    },
+    deleteAccount: async (getNext: { valid: boolean, id: string }, req: Request, res: Response, next: NextFunction) => {
+        try {
+            if (getNext.valid) {
+                await modelsAccount.findOneAndDelete({ _id: getNext.id });
+                res.status(200).json({ isValid: true, message: "Xóa tài khoản thanh cong." });
+
+            } else {
+                res.status(400).json({ isValid: false, message: "Tài khoản không tồn tại." });
+            }
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ isValid: false, message: "Lỗi server nội bộ." });
+        }
+    },
+    updateUsername: async (getNext: { valid: boolean, id: string }, req: Request, res: Response, next: NextFunction) => {
+        try {
+            if (getNext.valid) {
+                const { username } = req.body;
+                const account = await modelsAccount.findOne({ _id: getNext.id }) as {} | undefined | any;
+                if (account) {
+                    account.username = username;
+                    await account.save();
+                    res.status(200).json({ isValid: true, message: "Thay đổi username thanh cong." });
                 } else {
                     res.status(400).json({ isValid: false, message: "Tài khoản không tồn tại." });
                 }

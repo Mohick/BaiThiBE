@@ -7,7 +7,7 @@ import { Server } from 'socket.io';
 const app = express();
 const PORT = process.env.PORT || 3000;
 import morgan from "morgan";
-import RouterApp from "./src/MVC/Controll/Router";
+import RouterApp from "./src/MVC/Controller/Router";
 import { connectDB } from "./src/DB/ConnectDB";
 import cookieParser from "cookie-parser";
 connectDB();
