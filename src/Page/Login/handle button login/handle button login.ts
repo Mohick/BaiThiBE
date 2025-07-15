@@ -21,6 +21,8 @@ const handleFormLogin = async (
     if (username && password) {
         if (RegexUserName.test(username) && RegexPassword.test(password)) {
             const res = await loginAccount({ username, password }) as CRUDRequestSuccessProps
+            console.log(res);
+            
             if (res.data.isValid) {
                 await queryClient.refetchQueries({ queryKey: ["account"] })
                 alert(res.data.message)
